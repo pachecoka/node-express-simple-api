@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon ./src/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha ./tests/**/*Tests.js",
     "lint": "eslint ."
   },
   "author": "",
@@ -19,7 +19,10 @@
     "eslint": "^7.31.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-plugin-import": "^2.23.4",
-    "eslint-plugin-jsx-a11y": "^6.4.1"
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "mocha": "^9.0.3",
+    "should": "^13.2.3",
+    "sinon": "^11.1.1"
   },
   "nodemonConfig": {
     "restartable": "rs",
