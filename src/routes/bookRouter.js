@@ -5,10 +5,7 @@ const booksController = require('../controllers/booksController');
 function routes(Book) {
   const bookRouter = express.Router();
   const controller = booksController(Book);
-  bookRouter
-    .route('/books')
-    .post(controller.post)
-    .get(controller.get);
+  bookRouter.route('/books').post(controller.post).get(controller.get);
   bookRouter.use('/books/:bookId', (req, res, next) => {
     Book.findById(req.params.bookId, (err, book) => {
       if (err) {
@@ -23,7 +20,13 @@ function routes(Book) {
   });
   bookRouter
     .route('/books/:bookId')
-    .get((req, res) => res.json(req.book))
+    .get((req, res) => {
+      const returnBook = req.book.toJSON();
+      returnBook.links = {};
+      const genre = req.book.genre.replace(' ', '%20');
+      returnBook.links.filterByThisGenre = `http://${req.headers.host}/api/books/?genre=${genre}`;
+      res.json(returnBook);
+    })
     .put((req, res) => {
       const { book } = req;
       book.title = req.body.title;
